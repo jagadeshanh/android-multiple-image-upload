@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Reception</string>
+    <string name="phone_number_placeholder">10 digit phone number</string>
+    <string name="welcome">Welcome</string>
+    <string name="btn_continue">Continue</string>
+    <string name="login">Login</string>
+    <string name="email_placeholder">Enter your email</string>
+    <string name="password_placeholder">Enter your password</string>
+</resources>
