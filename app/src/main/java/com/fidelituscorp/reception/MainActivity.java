@@ -3,6 +3,7 @@ package com.fidelituscorp.reception;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -63,12 +64,25 @@ public class MainActivity extends AppCompatActivity {
             if (data.getClipData() != null) {
                 System.out.println("step3: multiple pictures are chose");
                 int count = data.getClipData().getItemCount();
-                System.out.println(count);
-                for (int i = 0; i < count; i++) {
-                    Uri imageUri = data.getClipData().getItemAt(i).getUri();
-                    String filePath = getAbsolutePath(imageUri);
-                    files.add(filePath);
+                System.out.println("files chosen :" + count);
+                ClipData mClipData = data.getClipData();
+
+                if (mClipData != null && mClipData.getItemCount() > 0) {
+                    for (int i = 0; i < mClipData.getItemCount(); i++) {
+                        ClipData.Item mItem = mClipData.getItemAt(i);
+                        String filePath = getAbsolutePath(mItem.getUri());
+                        files.add(filePath);
+                    }
                 }
+
+//                for (int i = 0; i < count; i++) {
+//                    System.out.println("pdf: check");
+//                    System.out.println("trying to get item at index :" + i);
+//                    System.out.println(data.getClipData().getItemAt(i));
+//                    Uri imageUri = data.getClipData().getItemAt(i).getUri();
+//                    String filePath = getAbsolutePath(imageUri);
+//                    files.add(filePath);
+//                }
             } else if (data.getData() != null) {
                 System.out.println("step3: One single picture is choose");
                 Uri imageUri = data.getData();
@@ -115,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String getAbsolutePath(Uri uri) {
         String path = null;
-        path = RealPathUtils.getRealPathFromURI_API19(MainActivity.this, uri);
+        path = RealPathUtils.getRealPath(this, uri);
         return path;
     }
 
